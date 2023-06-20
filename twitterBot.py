@@ -37,7 +37,7 @@ query_list = "Ukraine OR " \
 
 
 def get_tweets(lastID):
-    count = 3  # rate limit = 15
+    count = 15  # rate limit = 15
     command = api.search_tweets
     query = query_list + " -filter:retweets -filter:replies"
 
