@@ -1,4 +1,5 @@
 import tweepy
+import json
 import time
 
 auth = tweepy.OAuth1UserHandler(
@@ -39,16 +40,35 @@ def get_tweets(lastID):
     count = 3  # rate limit = 15
     command = api.search_tweets
     query = query_list + " -filter:retweets -filter:replies"
+
     tweets = [tweet for tweet in tweepy.Cursor(command,
                                                q=query,
                                                result_type='recent',
                                                since_id=lastID,
+                                               geocode='52.068803,19.479746,689km',
                                                count=count).items(count)]
+
     for tweet in tweets:
-        print(tweet.text + '\n' + '-' * 100 + '\n')
+        print(tweet.id)
+        print(tweet.created_at)
+        print(tweet.text)
+
+        data = {
+            "id": tweet.id,
+            "created_at": str(tweet.created_at),
+            "text": str(tweet.text)
+        }
+        with open('data.json', 'r+') as file:
+            file_data = json.load(file)
+            file_data.append(data)
+            file.seek(0)
+            json.dump(file_data, file, indent=4)
 
     time.sleep(10)  # seconds
-    get_tweets(tweets[count-1].id)  # Recursively call function /w last tracked ID
+    if tweets[count] == 0:
+        get_tweets(0)
+    else:
+        get_tweets(tweets[count - 1].id)  # Recursively call function /w last tracked ID
 
 
 get_tweets(0)  # Initiate function call
