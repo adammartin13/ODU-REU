@@ -53,11 +53,23 @@ def get_tweets(lastID):
         print(tweet.created_at)
         print(tweet.text)
 
-        data = {
-            "id": tweet.id,
-            "created_at": str(tweet.created_at),
-            "text": str(tweet.text)
-        }
+        try:
+            print(tweet.quoted_status.id)
+            print(tweet.quoted_status.text)
+            data = {
+                "id": tweet.id,
+                "created_at": str(tweet.created_at),
+                "text": str(tweet.text),
+                "quote_id": str(tweet.quoted_status.id),
+                "quote_text": str(tweet.quoted_status.text)
+            }
+        except AttributeError:
+            data = {
+                "id": tweet.id,
+                "created_at": str(tweet.created_at),
+                "text": str(tweet.text)
+            }
+
         with open('data.json', 'r+') as file:
             file_data = json.load(file)
             file_data.append(data)
