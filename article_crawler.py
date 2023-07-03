@@ -1,26 +1,26 @@
 import csv
 import urllib.error
-
-import requests
 from urllib.request import urlopen
+from urllib.parse import urlparse
 import json
 
 with open('Disinformation Training Data.csv', 'r') as csv_file:
     reader = csv.reader(csv_file)
 
     for row in reader:
-        # resp = requests.get(row[0])
         data = {
             "Link": row[0],
             "Return Code": "",
-            "Publisher": "",
+            "Publisher": urlparse(row[0]).netloc,
             "Is Disinformation": row[1],
             "Text": ""
         }
-        # print(data)
         try:
             resp = urlopen(row[0])
-            print(resp.getcode())
+            data["Return Code"] = resp.getcode()
+            print(data)
+            # print(resp.read())
         except urllib.error.HTTPError as e:
-            print(e)
+            data["Return Code"] = 403
+            print(data)
 
