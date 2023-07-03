@@ -37,7 +37,7 @@ query_list = "Ukraine OR " \
 
 
 def get_tweets(lastID):
-    count = 15  # rate limit = 15
+    count = 5  # rate limit = 15
     command = api.search_tweets
     query = query_list + " -filter:retweets -filter:replies"
 
@@ -77,7 +77,7 @@ def get_tweets(lastID):
             json.dump(file_data, file, indent=4)
 
     time.sleep(10)  # seconds
-    if tweets[count] == 0:
+    if len(tweets) == 0:
         get_tweets(0)
     else:
         get_tweets(tweets[count - 1].id)  # Recursively call function /w last tracked ID
