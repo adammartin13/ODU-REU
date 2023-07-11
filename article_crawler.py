@@ -28,7 +28,7 @@ def check_json(link, filename='article_data.json'):
     return True
 
 
-with open('Disinformation Training Data.csv', 'r') as csv_file:
+with open('Disinformation_Training_Data.csv', 'r') as csv_file:
     reader = csv.reader(csv_file)
 
     viol_end_char = ['}', ')', ';', '=', '>', '_']
