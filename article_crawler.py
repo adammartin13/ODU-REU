@@ -7,7 +7,7 @@ import json
 
 # function to add to JSON
 def write_json(new_data, filename='article_data.json'):
-    with open(filename, 'r+') as file:
+    with open(filename, 'r+', encoding='utf8') as file:
         # First we load existing data into a dict.
         file_data = json.load(file)
         file_data["data"].append(new_data)
@@ -19,7 +19,7 @@ def write_json(new_data, filename='article_data.json'):
 
 # check if link exists
 def check_json(link, filename='article_data.json'):
-    with open(filename, 'r') as file:
+    with open(filename, encoding='utf8') as file:
         file_data = json.load(file)
         for object in file_data["data"]:
             if object["Link"] == link:
@@ -33,10 +33,21 @@ with open('Disinformation_Training_Data.csv', 'r') as csv_file:
 
     viol_end_char = ['}', ')', ';', '=', '>', '_']
     viol_start_char = ["'", ';', '/', '%', '+', '(', '!', '{', '&', '`', '=']
+    blacklist_websites = ['www.nytimes.com', 'en.news-front.info', 'tass.ru', 'news.mail.ru',
+                          'www.defense.gov', 'www.independent.co.uk', 'www.forbes.com', 'www.gazeta.ru']
 
-    # check if item already exists
     for row in reader:
-        if not check_json(row[0]):
+        if not check_json(row[0]):  # check if item already exists
+            continue
+        elif urlparse(row[0]).netloc in blacklist_websites:  # check if website is blacklisted
+            data = {
+                "Link": row[0],
+                "Return Code": "400",
+                "Publisher": urlparse(row[0]).netloc,
+                "Is Disinformation": row[1],
+                "Text": ""
+            }
+            write_json(data)
             continue
 
         data = {
