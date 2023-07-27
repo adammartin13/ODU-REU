@@ -28,6 +28,29 @@ def check_json(link, filename='article_data.json'):
     return True
 
 
+# Clean data up to title
+def cleanStart(html):
+    try:
+        title = html.split('<title>')[1].split('</title>')[0]
+        if len([i for i in range(len(html)) if html.startswith(title, i)]) > 1:
+            return html[[i for i in range(len(html)) if html.startswith(title, i)][1]:]
+        else:
+            return html[[i for i in range(len(html)) if html.startswith(title, i)][0]:]
+    except IndexError:
+        return html
+
+
+# Clean article text
+def clean_text(text):
+    bad_chars = ["'", '"', '<', '>', '/', '{', '{', '}', ']', '\\', '|', '`', '~', '@',
+                 '#', '$', '%', '^', '&', '*', '(', ')', '_', '-', '+', '=', '  ', '\t']
+    text = text.lower()  # Make all lower case
+    text = ''.join([i for i in text if not i.isdigit()])  # Remove numbers
+    for i in bad_chars:  # Remove special characters
+        text = text.replace(i, '')
+    return text
+
+
 with open('Disinformation_Training_Data.csv', 'r') as csv_file:
     reader = csv.reader(csv_file)
 
@@ -62,7 +85,9 @@ with open('Disinformation_Training_Data.csv', 'r') as csv_file:
             resp = urlopen(row[0])
             data["Return Code"] = resp.getcode()
             # print(data)
-            html = resp.read().decode("utf8").split('<')
+            html = resp.read().decode("utf8")
+            html = cleanStart(html)
+            html = html.split('<')
             text = ''
             for line in html:
                 line = line[line.find('>')+1:]
@@ -88,6 +113,7 @@ with open('Disinformation_Training_Data.csv', 'r') as csv_file:
                 except IndexError as e:
                     error = e
             # print(text)
+            text = clean_text(text)
             data["Text"] = text
             print(data)
             write_json(data)

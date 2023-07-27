@@ -35,6 +35,7 @@ def check_json(link, filename='translated_text.json'):
 
     return True
 
+
 with open('Disinformation_Training_Data.csv', 'r') as csv_file:
     reader = csv.reader(csv_file)
 
@@ -43,6 +44,7 @@ with open('Disinformation_Training_Data.csv', 'r') as csv_file:
             continue
 
         to_translate = re.split(r'[,!?;:.]', read_json(row[0]))
+        iterator = 0
         translated = ''
         for word in to_translate:
             try:
@@ -52,8 +54,8 @@ with open('Disinformation_Training_Data.csv', 'r') as csv_file:
 
         data = {
             "Link": row[0],
-            "Text": read_json(row[0]).lower(),
-            "Text-Translated": translated.lower()
+            "Text": read_json(row[0]),
+            "Text-Translated": translated
         }
 
         write_json(data)
