@@ -25,10 +25,23 @@ def write_json(new_data, filename='translated_text.json'):
         json.dump(file_data, file, indent=4)
 
 
+# check if link exists
+def check_json(link, filename='translated_text.json'):
+    with open(filename, encoding='utf8') as file:
+        file_data = json.load(file)
+        for object in file_data["data"]:
+            if object["Link"] == link:
+                return False
+
+    return True
+
 with open('Disinformation_Training_Data.csv', 'r') as csv_file:
     reader = csv.reader(csv_file)
 
     for row in reader:
+        if not check_json(row[0]):
+            continue
+
         to_translate = re.split(r'[,!?;:.]', read_json(row[0]))
         translated = ''
         for word in to_translate:
@@ -38,8 +51,9 @@ with open('Disinformation_Training_Data.csv', 'r') as csv_file:
                 translated += word + ' '
 
         data = {
-            "Text": to_translate,
-            "Text-Translated": translated
+            "Link": row[0],
+            "Text": read_json(row[0]).lower(),
+            "Text-Translated": translated.lower()
         }
 
         write_json(data)
