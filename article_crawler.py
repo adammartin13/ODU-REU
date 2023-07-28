@@ -56,7 +56,7 @@ with open('Disinformation_Training_Data.csv', 'r') as csv_file:
 
     viol_end_char = ['}', ')', ';', '=', '>', '_']
     viol_start_char = ["'", ';', '/', '%', '+', '(', '!', '{', '&', '`', '=']
-    blacklist_websites = ['www.nytimes.com', 'en.news-front.info', 'tass.ru', 'news.mail.ru',
+    blacklist_websites = ['www.nytimes.com', 'en.news-front.info', 'tass.ru', 'news.mail.ru', 'tass.com',
                           'www.defense.gov', 'www.independent.co.uk', 'www.forbes.com', 'www.gazeta.ru']
 
     for row in reader:

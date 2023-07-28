@@ -36,6 +36,14 @@ def check_json(link, filename='translated_text.json'):
     return True
 
 
+# Clean article text
+def clean_text(text):
+    bad_chars = [',', '!', '?', ';', ':', '.']
+    for i in bad_chars:  # Remove special characters
+        text = text.replace(i, '')
+    return text
+
+
 with open('Disinformation_Training_Data.csv', 'r') as csv_file:
     reader = csv.reader(csv_file)
 
@@ -51,6 +59,8 @@ with open('Disinformation_Training_Data.csv', 'r') as csv_file:
                 translated += GoogleTranslator(source='auto', target='en').translate(word) + ' '
             except TypeError:
                 translated += word + ' '
+
+        translated = clean_text(translated)
 
         data = {
             "Link": row[0],
