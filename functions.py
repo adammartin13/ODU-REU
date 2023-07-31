@@ -82,7 +82,7 @@ def make_docs(model, data, text_col_name='paragraph', cat_col_name='frustration'
     return (docs)
 
 
-def predict_spacy(dataframe, model, text_col_name='paragraph'):
+def predict_spacy(dataframe, model, text_col_name='Text'):
     """
         Predicts the categories from a dataframe of texts using a trained SpaCy model.
 
@@ -101,7 +101,7 @@ def predict_spacy(dataframe, model, text_col_name='paragraph'):
             if model(text).cats[key] == max_val:
                 y_pred.append(key)
     dataframe['predicted'] = y_pred
-    return (dataframe)
+    return dataframe
 
 
 def predict_cat(string, model):

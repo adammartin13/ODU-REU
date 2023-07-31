@@ -23,6 +23,7 @@ random_data_col = functions.eq_division(input_data, n_sample=n_sample, cats_col_
 
 train_col, test_col = functions.random_select(input_data=random_data_col, cats_column_name=col_name)
 print("Training size:", len(train_col)), print("Test size:", len(test_col))
+train_col.to_csv('train.csv', index=False), test_col.to_csv('test.csv', index=False)
 
 # Using the spacy.doc architecture for our data and saving it in a .spacy file for training
 train_docs_col = functions.make_docs(nlp, train_col, cat_col_name=col_name, text_col_name='Text')
