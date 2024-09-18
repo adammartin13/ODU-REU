@@ -39,5 +39,7 @@ This project was not only a matter of trying to learn how to put an LLM together
 the ground running with going about new ways for training a new model. More data, more thorough research into our articles, more article collection and scraping automation, building our own tokenization tools, trying different model approaches, etc.. Working
 with Iryna and the VMASC team inspired me to keep working on this project, and this repository acts as a reminder of where it started, what I managed to do in so little time, and how far I've improved.
 ## ODU VMASC Team
+![VMASC Team](/VMASC.jpeg)
+
 This was one of the greatest team projects I've ever worked on. I look back fondly at the time I've spent with everyone in the office and wish everyone the best. It was an innovative, challenging, friendly, and honest atmosphere that I hope to make proud
 through my future iterations of this project and all other work I conduct in the future.
