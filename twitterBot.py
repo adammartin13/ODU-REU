@@ -2,12 +2,7 @@ import tweepy
 import json
 import time
 
-auth = tweepy.OAuth1UserHandler(
-    consumer_key='dB5olcSqt4kFs8PWBOjewSeHH',
-    consumer_secret='ANXUAZdWwIZ52227d39d5fjZGopQ46XwWGehG0MQsmefRa2Xpq',
-    access_token='756634151642595329-lytDEE7J08OSWlsbWbS7IQpnQbqaAQi',
-    access_token_secret='bl1Fb549QrXVhjlBkCI9EtPixdeLEnPzwBJpP8unaKJyr'
-)
+auth = tweepy.OAuth1UserHandler()
 api = tweepy.API(auth)
 
 # How do you say "Ukraine/Ukrainian migrant" in Polish?
